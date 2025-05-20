@@ -11,14 +11,15 @@
     </repositories>
 
     <modules>
-        <module>Core</module>
         <module>Common</module>
-        <module>Player</module>
-        <module>Bullet</module>
         <module>CommonBullet</module>
         <module>CommonAsteroids</module>
         <module>Asteroids</module>
+        <module>Player</module>
+        <module>Bullet</module>
         <module>Collision</module>
+        <module>Enemy</module>
+        <module>Core</module>
     </modules>
     <properties>
         <java>java</java>
