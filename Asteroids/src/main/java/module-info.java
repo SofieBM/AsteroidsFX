@@ -6,5 +6,4 @@ module Asteroid {
     requires CommonAsteroids;
     provides IGamePluginService with dk.sdu.mmmi.cbse.asteroid.AsteroidPlugin;
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.asteroid.AsteroidProcessor;
-    exports dk.sdu.mmmi.cbse.asteroid;
 }
