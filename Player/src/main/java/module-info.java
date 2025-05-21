@@ -9,4 +9,5 @@ module Player {
     provides IGamePluginService with dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
     exports dk.sdu.mmmi.cbse.playersystem;
+    // ingen 'exports' af interne pakker.
 }

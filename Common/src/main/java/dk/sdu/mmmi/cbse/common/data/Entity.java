@@ -3,7 +3,8 @@ package dk.sdu.mmmi.cbse.common.data;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Entity implements Serializable {
+public class Entity implements Serializable
+{
 
     private final UUID ID = UUID.randomUUID();
     
