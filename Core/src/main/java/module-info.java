@@ -1,5 +1,4 @@
-module Core
-{
+module Core {
     requires Common;
     requires CommonBullet;    
     requires javafx.graphics;   
@@ -7,9 +6,9 @@ module Core
     requires spring.core;
     requires spring.beans;
 
-    requires Player;
-    requires Asteroid;
-    requires Bullet;
+    requires Player; // Kræv Player-modulet
+    requires Asteroid; // Kræv Asteroid-modulet
+    requires Bullet; // Kræv Bullet-modulet
     requires Collision;
     requires Enemy;
 
