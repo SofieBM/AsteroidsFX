@@ -9,20 +9,27 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author jcs
  */
 @Configuration
-class ModuleConfig {
+class ModuleConfig
+{
     
-    public ModuleConfig() {
+    public ModuleConfig()
+    {
     }
 
     @Bean
-    public Game game(){
-        return new Game(gamePluginServices(), entityProcessingServiceList(), postEntityProcessingServices());
+    public Game game(List<IGamePluginService> gamePluginServices,
+                     List<IEntityProcessingService> entityProcessingServiceList,
+                     List<IPostEntityProcessingService> postEntityProcessingServices,
+                     List<BulletSPI> bulletSPIs)
+    {
+        return new Game(gamePluginServices, entityProcessingServiceList, postEntityProcessingServices, bulletSPIs);
     }
 
     @Bean
