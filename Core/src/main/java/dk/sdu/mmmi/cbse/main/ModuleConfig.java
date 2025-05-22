@@ -21,6 +21,7 @@ class ModuleConfig
     
     public ModuleConfig()
     {
+
     }
 
     @Bean
@@ -33,22 +34,26 @@ class ModuleConfig
     }
 
     @Bean
-    public List<IEntityProcessingService> entityProcessingServiceList(){
+    public List<IEntityProcessingService> entityProcessingServiceList()
+    {
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     @Bean
-    public List<IGamePluginService> gamePluginServices() {
+    public List<IGamePluginService> gamePluginServices()
+    {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     @Bean
-    public List<IPostEntityProcessingService> postEntityProcessingServices() {
+    public List<IPostEntityProcessingService> postEntityProcessingServices()
+    {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     @Bean
-    public List<BulletSPI> bulletSPIs() {
+    public List<BulletSPI> bulletSPIs()
+    {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

@@ -9,14 +9,16 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public enum ServiceLocator {
+public enum ServiceLocator
+{
 
     INSTANCE;
 
     private static final Map<Class, ServiceLoader> loadermap = new HashMap<>();
     private final ModuleLayer layer;
 
-    ServiceLocator() {
+    ServiceLocator()
+    {
         try {
             Path pluginsDir = Paths.get("plugins"); // Directory with plugins JARs
 
@@ -49,7 +51,8 @@ public enum ServiceLocator {
     }
 
 
-    public <T> List<T> locateAll(Class<T> service) {
+    public <T> List<T> locateAll(Class<T> service)
+    {
         ServiceLoader<T> loader = loadermap.get(service);
 
         if (loader == null) {
@@ -59,9 +62,11 @@ public enum ServiceLocator {
 
         List<T> list = new ArrayList<T>();
 
-        if (loader != null) {
+        if (loader != null)
+        {
             try {
-                for (T instance : loader) {
+                for (T instance : loader)
+                {
                     list.add(instance);
                 }
             } catch (ServiceConfigurationError serviceError) {

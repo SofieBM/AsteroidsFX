@@ -1,5 +1,4 @@
-module Core
-{
+module Core {
     requires Common;
     requires CommonBullet;
     requires CommonAsteroids;
@@ -10,10 +9,9 @@ module Core
     requires spring.core;
     requires spring.beans;
 
-    // Dette er vigtigt for at modulet er med i grafen.
-    requires Player;
-    requires Asteroid;
-    requires Bullet;
+    requires Player; // Kræv Player-modulet
+    requires Asteroid; // Kræv Asteroid-modulet
+    requires Bullet; // Kræv Bullet-modulet
     requires Collision;
     requires Enemy;
 
