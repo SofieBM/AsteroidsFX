@@ -28,7 +28,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author jcs
  */
-class Game {
+class Game
+{
 
     private final GameData gameData = new GameData();
     private final World world = new World();
@@ -38,53 +39,67 @@ class Game {
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
 
-    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
+    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices)
+    {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServiceList = entityProcessingServiceList;
         this.postEntityProcessingServices = postEntityProcessingServices;
     }
 
-    public void start(Stage window) throws Exception {
+    public void start(Stage window) throws Exception
+    {
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
 
         Scene scene = new Scene(gameWindow);
-        scene.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.LEFT)) {
+        scene.setOnKeyPressed(event ->
+        {
+            if (event.getCode().equals(KeyCode.LEFT))
+            {
                 gameData.getKeys().setKey(GameKeys.LEFT, true);
             }
-            if (event.getCode().equals(KeyCode.RIGHT)) {
+            if (event.getCode().equals(KeyCode.RIGHT))
+            {
                 gameData.getKeys().setKey(GameKeys.RIGHT, true);
             }
-            if (event.getCode().equals(KeyCode.UP)) {
+            if (event.getCode().equals(KeyCode.UP))
+            {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
-            if (event.getCode().equals(KeyCode.SPACE)) {
+            if (event.getCode().equals(KeyCode.SPACE))
+            {
                 gameData.getKeys().setKey(GameKeys.SPACE, true);
             }
         });
-        scene.setOnKeyReleased(event -> {
-            if (event.getCode().equals(KeyCode.LEFT)) {
+        scene.setOnKeyReleased(event ->
+        {
+            if (event.getCode().equals(KeyCode.LEFT))
+            {
                 gameData.getKeys().setKey(GameKeys.LEFT, false);
             }
-            if (event.getCode().equals(KeyCode.RIGHT)) {
+            if (event.getCode().equals(KeyCode.RIGHT))
+            {
                 gameData.getKeys().setKey(GameKeys.RIGHT, false);
             }
-            if (event.getCode().equals(KeyCode.UP)) {
+            if (event.getCode().equals(KeyCode.UP))
+            {
                 gameData.getKeys().setKey(GameKeys.UP, false);
             }
-            if (event.getCode().equals(KeyCode.SPACE)) {
+            if (event.getCode().equals(KeyCode.SPACE))
+            {
                 gameData.getKeys().setKey(GameKeys.SPACE, false);
             }
 
         });
 
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getGamePluginServices()) {
+        for (IGamePluginService iGamePlugin : getGamePluginServices())
+        {
             iGamePlugin.start(gameData, world);
         }
-        for (Entity entity : world.getEntities()) {
+        for (Entity entity : world.getEntities())
+        {
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
@@ -94,10 +109,13 @@ class Game {
         window.show();
     }
 
-    public void render() {
-        new AnimationTimer() {
+    public void render()
+    {
+        new AnimationTimer()
+        {
             @Override
-            public void handle(long now) {
+            public void handle(long now)
+            {
                 update();
                 draw();
                 gameData.getKeys().update();
@@ -106,27 +124,35 @@ class Game {
         }.start();
     }
 
-    private void update() {
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+    private void update()
+    {
+        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices())
+        {
             entityProcessorService.process(gameData, world);
         }
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices())
+        {
             postEntityProcessorService.process(gameData, world);
         }
     }
 
-    private void draw() {
-        for (Entity polygonEntity : polygons.keySet()) {
-            if (!world.getEntities().contains(polygonEntity)) {
+    private void draw()
+    {
+        for (Entity polygonEntity : polygons.keySet())
+        {
+            if (!world.getEntities().contains(polygonEntity))
+            {
                 Polygon removedPolygon = polygons.get(polygonEntity);
                 polygons.remove(polygonEntity);
                 gameWindow.getChildren().remove(removedPolygon);
             }
         }
 
-        for (Entity entity : world.getEntities()) {
+        for (Entity entity : world.getEntities())
+        {
             Polygon polygon = polygons.get(entity);
-            if (polygon == null) {
+            if (polygon == null)
+            {
                 polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);

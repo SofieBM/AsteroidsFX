@@ -15,6 +15,7 @@ public class EnemyPlugin implements IGamePluginService
 
     public EnemyPlugin()
     {
+
     }
 
     @Override
