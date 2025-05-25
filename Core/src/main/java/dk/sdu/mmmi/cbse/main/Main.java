@@ -20,9 +20,9 @@ public class Main extends Application
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
 
-        for (String beanName : ctx.getBeanDefinitionNames())
-        {
-            System.out.println(beanName);
+        for (String beanName : ctx.getBeanDefinitionNames()) {
+            System.out.println("Spring Bean" + beanName);
+
         }
         
         Game game = ctx.getBean(Game.class);
@@ -31,4 +31,10 @@ public class Main extends Application
 
     }
 
+    @Override
+    public void stop() throws Exception
+    {
+        super.stop();
+        System.exit(0);
+    }
 }

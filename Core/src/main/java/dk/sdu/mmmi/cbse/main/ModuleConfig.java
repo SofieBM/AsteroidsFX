@@ -9,6 +9,7 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -24,9 +25,12 @@ class ModuleConfig
     }
 
     @Bean
-    public Game game()
+    public Game game(List<IGamePluginService> gamePluginServices,
+                     List<IEntityProcessingService> entityProcessingServiceList,
+                     List<IPostEntityProcessingService> postEntityProcessingServices,
+                     List<BulletSPI> bulletSPIs)
     {
-        return new Game(gamePluginServices(), entityProcessingServiceList(), postEntityProcessingServices());
+        return new Game(gamePluginServices, entityProcessingServiceList, postEntityProcessingServices, bulletSPIs);
     }
 
     @Bean
