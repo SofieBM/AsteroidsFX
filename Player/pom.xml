@@ -20,5 +20,96 @@
             <artifactId>CommonBullet</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-test-dependencies</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/test-libs</outputDirectory>
+                            <includeScope>test</includeScope>
+                            <stripVersion>false</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${maven.compiler.target}</release>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>--add-modules</arg>
+                                <arg>org.junit.jupiter.api,org.junit.jupiter.engine,org.mockito,org.mockito.junit.jupiter,Common,CommonBullet</arg>
+                                <arg>--release</arg>
+                                <arg>${maven.compiler.target}</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <argLine>
+                        --module-path
+                        "${project.build.directory}/test-libs${path.separator}${project.build.directory}/../Common/target/Common-${project.version}.jar${path.separator}${project.build.directory}/../CommonBullet/target/CommonBullet-${project.version}.jar"
+
+                        --add-modules org.junit.jupiter.api,org.junit.jupiter.engine,org.mockito,org.mockito.junit.jupiter,Common,CommonBullet
+
+                        --add-reads Player.test=Player
+
+                        --add-opens Player/dk.sdu.mmmi.cbse.playersystem=org.junit.jupiter.api
+                        --add-opens Player/dk.sdu.mmmi.cbse.playersystem=org.mockito
+                        --add-opens Player/dk.sdu.mmmi.cbse.playersystem=org.mockito.junit.jupiter
+                    </argLine>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
