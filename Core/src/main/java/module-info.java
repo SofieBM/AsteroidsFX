@@ -6,7 +6,7 @@ module Core {
     requires spring.core;
     requires spring.beans;
 
-    requires Player; // Kræv Player-modulet
+    requires Player; // Kræv Player.test-modulet
     requires Asteroid; // Kræv Asteroid-modulet
     requires Bullet; // Kræv Bullet-modulet
     requires Collision;
