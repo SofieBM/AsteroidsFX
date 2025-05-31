@@ -1,12 +1,6 @@
 package dk.sdu.mmmi.cbse.common.bullet;
-
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
-
-/**
- *
- * @author corfixen
- */
 public interface BulletSPI
 {
     //Interface-niveau: Beskriv generelt, hvad dette interface repræsenterer.
