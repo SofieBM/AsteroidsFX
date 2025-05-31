@@ -1,75 +1,77 @@
-package dk.sdu.mmmi.cbse;
-
-
+package dk.sdu.mmmi.cbse; // Double-check this package name!
 
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
-
-import java.util.Collection;
-
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
-import java.util.ServiceLoader;
-
-import java.util.stream.Collectors;
-
-
-
-public class EnemyControlSystem implements IEntityProcessingService
-
-{
+@Component
+public class EnemyControlSystem implements IEntityProcessingService {
 
     private final Random random = new Random();
+    private final List<BulletSPI> bulletSPIs;
 
-
+    /**
+     * Constructor for EnemyControlSystem. Spring will automatically inject
+     * the list of available BulletSPI implementations.
+     * @param bulletSPIs A list of BulletSPI implementations.
+     */
+    @Autowired
+    public EnemyControlSystem(List<BulletSPI> bulletSPIs) {
+        this.bulletSPIs = bulletSPIs;
+    }
 
     @Override
-
-    public void process(GameData gameData, World world)
-    {
-        for (Entity enemy : world.getEntities(Enemy.class))
-        {
-            int[] rotationValues = {-5,0,5}; // det her ændre enemy spaceships rotation
-
-            // dette gør at det bevæger sig fremad
+    public void process(GameData gameData, World world) {
+        for (Entity enemy : world.getEntities(Enemy.class)) {
+            // Enemy movement (forward)
             double speed = 1.5;
             double changeX = Math.cos(Math.toRadians(enemy.getRotation())) * speed;
             double changeY = Math.sin(Math.toRadians(enemy.getRotation())) * speed;
             enemy.setX(enemy.getX() + changeX);
             enemy.setY(enemy.getY() + changeY);
 
+            // Enemy screen wrapping
+            if (enemy.getX() < 0) enemy.setX(gameData.getDisplayWidth());
+            if (enemy.getX() > gameData.getDisplayWidth()) enemy.setX(0);
+            if (enemy.getY() < 0) enemy.setY(gameData.getDisplayHeight());
+            if (enemy.getY() > gameData.getDisplayHeight()) enemy.setY(0);
 
-            // det her gør at fjenden wrappes rundt om skærmen
-            if (enemy.getX() < 0) enemy.setX(1);
-            if (enemy.getX() > gameData.getDisplayWidth()) enemy.setX(gameData.getDisplayWidth() - 1);
-            if (enemy.getY() < 0) enemy.setY(1);
-            if (enemy.getY() > gameData.getDisplayHeight()) enemy.setY(gameData.getDisplayHeight() - 1);
-
-
-            //det her gør at der er en tilfældig skydelogik
-            double shootingProbability = 0.35;
-            if (random.nextDouble() < shootingProbability)
-            {
-                shootBullet(enemy, gameData, world);
+            // Random shooting logic
+            double shootingProbability = 0.05;
+            if (random.nextDouble() < shootingProbability) {
+                if (!bulletSPIs.isEmpty()) {
+                    shootBullet(enemy, gameData, world);
+                } else {
+                }
             }
         }
     }
 
-    private void shootBullet(Entity enemy, GameData gameData, World world)
-    {
-        getBulletSPIs().stream().findFirst().ifPresent(
+    /**
+     * Fires a bullet from the enemy.
+     * @param enemy The enemy entity firing the bullet.
+     * @param gameData GameData object.
+     * @param world World object.
+     */
+    private void shootBullet(Entity enemy, GameData gameData, World world) {
+        getBulletSPI().ifPresent(
                 spi -> world.addEntity(spi.createBullet(enemy, gameData))
         );
     }
 
-
-    private Collection<?extends BulletSPI> getBulletSPIs()
-    {
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(Collectors.toList());
+    /**
+     * Helper method to retrieve the first available BulletSPI.
+     * @return An Optional containing the first BulletSPI found, or empty if none.
+     */
+    private Optional<BulletSPI> getBulletSPI() {
+        return bulletSPIs.stream().findFirst();
     }
 }

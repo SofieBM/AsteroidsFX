@@ -5,28 +5,21 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import org.springframework.stereotype.Component; // ADD THIS IMPORT
 
-public class BulletPlugin implements IGamePluginService
-{
+@Component
+public class BulletPlugin implements IGamePluginService {
 
     private Entity bullet;
 
     @Override
-    public void start(GameData gameData, World world)
-    {
-
+    public void start(GameData gameData, World world) {
     }
 
     @Override
-    public void stop(GameData gameData, World world)
-    {
-        for (Entity e : world.getEntities())
-        {
-            if (e.getClass() == Bullet.class)
-            {
-                world.removeEntity(e);
-            }
+    public void stop(GameData gameData, World world) {
+        for (Entity bullet : world.getEntities(Bullet.class)) {
+            world.removeEntity(bullet);
         }
     }
-
 }
