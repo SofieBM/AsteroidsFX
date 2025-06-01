@@ -10,11 +10,6 @@ import static java.util.stream.Collectors.toList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
-
-/**
- *
- * @author jcs
- */
 @Configuration
 class ModuleConfig
 {

@@ -39,12 +39,12 @@ class Game
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
     private final List<BulletSPI> bulletSPIs;
 
-    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices, List<BulletSPI> bulletSPIs, List<BulletSPI> bulletSPIs1)
+    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices, List<BulletSPI> bulletSPIs)
     {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServiceList = entityProcessingServiceList;
         this.postEntityProcessingServices = postEntityProcessingServices;
-        this.bulletSPIs = bulletSPIs1;
+        this.bulletSPIs = bulletSPIs;
     }
 
     public void start(Stage window) throws Exception
