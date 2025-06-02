@@ -20,7 +20,8 @@ public class Main extends Application
         
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(ModuleConfig.class);
 
-        for (String beanName : ctx.getBeanDefinitionNames()) {
+        for (String beanName : ctx.getBeanDefinitionNames())
+        {
             System.out.println("Spring Bean" + beanName);
 
         }

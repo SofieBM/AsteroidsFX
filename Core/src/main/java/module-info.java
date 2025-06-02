@@ -1,4 +1,5 @@
-module Core {
+module Core
+{
     requires CommonBullet;
     requires javafx.graphics;
     requires javafx.controls;

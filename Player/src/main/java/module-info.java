@@ -2,7 +2,8 @@
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
-module Player {
+module Player
+{
     requires Common;
     requires CommonBullet;
     requires spring.context;

@@ -6,7 +6,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class ScoreServiceClient implements IScoreService {
+public class ScoreServiceClient implements IScoreService
+{
 
     private final RestTemplate restTemplate;
     private final String baseUrl = "http://localhost:8080/api/scores";
@@ -16,19 +17,20 @@ public class ScoreServiceClient implements IScoreService {
     }
 
     @Override
-    public int addScore(String playerId, int points) {
+    public int addScore(String playerId, int points)
+    {
         String uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/add")
                 .queryParam("playerId", playerId)
                 .queryParam("points", points)
                 .toUriString();
-        // We expect an integer back from the service
         Integer newScore = restTemplate.postForObject(uri, null, Integer.class);
         return newScore != null ? newScore : 0;
     }
 
     @Override
-    public int getScore(String playerId) {
+    public int getScore(String playerId)
+    {
         String uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/{playerId}")
                 .buildAndExpand(playerId)
@@ -38,12 +40,12 @@ public class ScoreServiceClient implements IScoreService {
     }
 
     @Override
-    public int resetScore(String playerId) {
+    public int resetScore(String playerId)
+    {
         String uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .path("/reset")
                 .queryParam("playerId", playerId)
                 .toUriString();
-        // We expect an integer back from the service, typically 0
         Integer resetValue = restTemplate.postForObject(uri, null, Integer.class);
         return resetValue != null ? resetValue : 0;
     }

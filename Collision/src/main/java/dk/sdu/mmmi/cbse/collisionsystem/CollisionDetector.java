@@ -10,23 +10,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class CollisionDetector implements IPostEntityProcessingService {
-
-    // Default constructor is fine if no dependencies
+public class CollisionDetector implements IPostEntityProcessingService
+{
     public CollisionDetector() {
     }
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void process(GameData gameData, World world)
+    {
         Set<Entity> entitiesToRemove = new HashSet<>();
 
-        for (Entity entity1 : world.getEntities()) {
-            for (Entity entity2 : world.getEntities()) {
-                if (entity1.getID().equals(entity2.getID())) {
+        for (Entity entity1 : world.getEntities())
+        {
+            for (Entity entity2 : world.getEntities())
+            {
+                if (entity1.getID().equals(entity2.getID()))
+                {
                     continue;
                 }
 
-                if (this.collides(entity1, entity2)) {
+                if (this.collides(entity1, entity2))
+                {
                     entitiesToRemove.add(entity1);
                     entitiesToRemove.add(entity2);
                 }
@@ -38,7 +42,8 @@ public class CollisionDetector implements IPostEntityProcessingService {
         }
     }
 
-    public Boolean collides(Entity entity1, Entity entity2) {
+    public Boolean collides(Entity entity1, Entity entity2)
+    {
         float dx = (float) entity1.getX() - (float) entity2.getX();
         float dy = (float) entity1.getY() - (float) entity2.getY();
         float distance = (float) Math.sqrt(dx * dx + dy * dy);

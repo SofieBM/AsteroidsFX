@@ -5,7 +5,8 @@ package dk.sdu.mmmi.cbse.common.services;
  * This acts as a Service Provider Interface (SPI) for the game to interact with
  * any concrete scoring implementation (e.g., a local service or a microservice client).
  */
-public interface IScoreService {
+public interface IScoreService
+{
 
     /**
      * Adds points to a specific player's score.

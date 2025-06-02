@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse; // Double-check this package name!
+package dk.sdu.mmmi.cbse;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -8,21 +8,25 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class EnemyPlugin implements IGamePluginService {
+public class EnemyPlugin implements IGamePluginService
+{
     private Entity enemy;
     private Random rnd = new Random();
 
-    public EnemyPlugin() {
+    public EnemyPlugin()
+    {
     }
 
     @Override
-    public void start(GameData gameData, World world) {
+    public void start(GameData gameData, World world)
+    {
         // Create an Enemy spaceship when the game starts
         enemy = createEnemyShip(gameData);
         world.addEntity(enemy);
     }
 
-    private Entity createEnemyShip(GameData gameData) {
+    private Entity createEnemyShip(GameData gameData)
+    {
         Entity enemyShip = new Enemy();
         enemyShip.setPolygonCoordinates(-7, -7, 10, 0, -7, 7);
 
@@ -34,7 +38,8 @@ public class EnemyPlugin implements IGamePluginService {
     }
 
     @Override
-    public void stop(GameData gameData, World world) {
+    public void stop(GameData gameData, World world)
+    {
         // This removes the enemy spaceship when the plugin stops
         world.removeEntity(enemy);
     }

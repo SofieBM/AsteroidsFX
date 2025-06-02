@@ -22,7 +22,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PlayerMovementTest {
+public class PlayerMovementTest
+{
     private PlayerControlSystem playerControlSystem;
     private GameData gameData;
     private World world;
@@ -33,7 +34,8 @@ public class PlayerMovementTest {
     private BulletSPI mockedBulletSPI;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         MockitoAnnotations.openMocks(this);
 
         gameData = new GameData();
@@ -55,7 +57,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should rotate right when RIGHT key is pressed")
-    void testPlayerRotatesRight() {
+    void testPlayerRotatesRight()
+    {
         double initialRotation = player.getRotation();
         gameKeys.setKey(GameKeys.RIGHT, true);
         playerControlSystem.process(gameData, world);
@@ -66,7 +69,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should rotate left when LEFT key is pressed")
-    void testPlayerRotaesLeft() {
+    void testPlayerRotaesLeft()
+    {
         double initialRotation = player.getRotation();
         gameKeys.setKey(GameKeys.LEFT, true);
         playerControlSystem.process(gameData, world);
@@ -75,7 +79,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should move forward when UP key is pressed (facing right)")
-    void testPlayerMovesForwardFacingRight() {
+    void testPlayerMovesForwardFacingRight()
+    {
         double initialX = player.getX();
         double initialY = player.getY();
         player.setRotation(0.0);
@@ -87,7 +92,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should move forward when UP key is pressed (facing up)")
-    void testPlayerMovesForwardFacingUp() {
+    void testPlayerMovesForwardFacingUp()
+    {
         double initialX = player.getX();
         double initialY = player.getY();
         player.setRotation(90.0);
@@ -99,7 +105,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should not move or rotate when no keys are pressed")
-    void testPlayerStaysStillWithoutInput() {
+    void testPlayerStaysStillWithoutInput()
+    {
         double initialX = player.getX();
         double initialY = player.getY();
         double initialRotation = player.getRotation();
@@ -114,7 +121,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should wrap around screen horizontally if X goes out of bounds")
-    void testPlayerWrapsHorizontally() {
+    void testPlayerWrapsHorizontally()
+    {
         // For X > displayWidth
         player.setX(gameData.getDisplayWidth() + 1);
         playerControlSystem.process(gameData, world);
@@ -130,7 +138,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("Player should wrap around screen vertically if Y goes out of bounds")
-    void testPlayerWrapsVertically() {
+    void testPlayerWrapsVertically()
+    {
         // For Y > displayHeight
         player.setY(gameData.getDisplayHeight() + 1);
         player.setX(100); // Keep X constant for this test
@@ -150,7 +159,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("BulletSPI should be called when SPACE key is pressed")
-    void testBulletSPIIsCalledOnSpacePress() {
+    void testBulletSPIIsCalledOnSpacePress()
+    {
         gameKeys.setKey(GameKeys.SPACE, true);
         playerControlSystem.process(gameData, world);
         verify(mockedBulletSPI).createBullet(player, gameData);
@@ -158,7 +168,8 @@ public class PlayerMovementTest {
 
     @Test
     @DisplayName("BulletSPI should not be called when SPACE key is not pressed")
-    void testBulletSPIIsNotCalledWithoutSpacePress() {
+    void testBulletSPIIsNotCalledWithoutSpacePress()
+    {
         gameKeys.setKey(GameKeys.SPACE, false);
         playerControlSystem.process(gameData, world);
         verify(mockedBulletSPI, never()).createBullet(any(Entity.class), any(GameData.class));

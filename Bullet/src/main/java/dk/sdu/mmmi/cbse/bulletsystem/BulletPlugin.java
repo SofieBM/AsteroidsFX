@@ -8,17 +8,21 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import org.springframework.stereotype.Component; // ADD THIS IMPORT
 
 @Component
-public class BulletPlugin implements IGamePluginService {
+public class BulletPlugin implements IGamePluginService
+{
 
     private Entity bullet;
 
     @Override
-    public void start(GameData gameData, World world) {
+    public void start(GameData gameData, World world)
+    {
     }
 
     @Override
-    public void stop(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(Bullet.class)) {
+    public void stop(GameData gameData, World world)
+    {
+        for (Entity bullet : world.getEntities(Bullet.class))
+        {
             world.removeEntity(bullet);
         }
     }

@@ -14,12 +14,10 @@ import java.util.stream.Collectors;
  * This service provides REST endpoints to manage player scores.
  */
 @SpringBootApplication
-@RestController // Marks this class as a REST controller
-@RequestMapping("/api/scores") // Base path for all endpoints in this controller
-public class ScoreApplication {
-
-    // In-memory storage for player scores.
-    // In a production environment, this would be backed by a database.
+@RestController
+@RequestMapping("/api/scores")
+public class ScoreApplication
+{
     private final Map<String, Integer> playerScores = new ConcurrentHashMap<>();
 
     /**
@@ -39,7 +37,8 @@ public class ScoreApplication {
      * @return The updated total score for the specified player.
      */
     @PostMapping("/add")
-    public int addScore(@RequestParam String playerId, @RequestParam int points) {
+    public int addScore(@RequestParam String playerId, @RequestParam int points)
+    {
         // Atomically updates the score: if player exists, adds points; otherwise, sets initial points.
         playerScores.merge(playerId, points, Integer::sum);
         System.out.println("Score updated for " + playerId + ": " + playerScores.get(playerId));
@@ -66,7 +65,8 @@ public class ScoreApplication {
      * @return 0, indicating the score has been reset.
      */
     @PostMapping("/reset")
-    public int resetScore(@RequestParam String playerId) {
+    public int resetScore(@RequestParam String playerId)
+    {
         playerScores.put(playerId, 0); // Set score to 0
         System.out.println("Score reset for " + playerId);
         return 0;
@@ -80,15 +80,16 @@ public class ScoreApplication {
      * limited to the top 5 entries.
      */
     @GetMapping("/leaderboard")
-    public Map<String, Integer> getLeaderboard() {
+    public Map<String, Integer> getLeaderboard()
+    {
         return playerScores.entrySet().stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()) // Sort by score descending
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(5) // Get top 5
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
-                        (e1, e2) -> e1, // Merge function for duplicate keys (not expected here)
-                        LinkedHashMap::new // Preserve the insertion order (which is now sorted order)
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
                 ));
     }
 }

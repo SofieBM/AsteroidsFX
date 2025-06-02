@@ -20,7 +20,7 @@ public enum ServiceLocator
     ServiceLocator()
     {
         try {
-            Path pluginsDir = Paths.get("plugins"); // Directory with plugins JARs
+            Path pluginsDir = Paths.get("plugins");
 
             // Search for plugins in the plugins directory
             ModuleFinder pluginsFinder = ModuleFinder.of(pluginsDir);
@@ -55,7 +55,8 @@ public enum ServiceLocator
     {
         ServiceLoader<T> loader = loadermap.get(service);
 
-        if (loader == null) {
+        if (loader == null)
+        {
             loader = ServiceLoader.load(layer, service);
             loadermap.put(service, loader);
         }

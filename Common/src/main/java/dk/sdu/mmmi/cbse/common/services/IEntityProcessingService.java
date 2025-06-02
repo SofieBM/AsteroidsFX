@@ -3,7 +3,8 @@ package dk.sdu.mmmi.cbse.common.services;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 
-public interface IEntityProcessingService {
+public interface IEntityProcessingService
+{
     //Interface-niveau: Beskriv generelt, hvad dette interface repræsenterer. (F.eks., "Interface for services, der behandler spilenheders logik hvert spil-tick.")
 
     /**

@@ -8,15 +8,15 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import org.springframework.stereotype.Component; // ADD THIS IMPORT
 
-@Component // ADD THIS ANNOTATION
-public class BulletControlSystem implements IEntityProcessingService, BulletSPI {
-
-    // This class implements BulletSPI directly, so it can be injected as BulletSPI
-    // and processed as IEntityProcessingService. No explicit constructor needed if no dependencies.
+@Component
+public class BulletControlSystem implements IEntityProcessingService, BulletSPI
+{
 
     @Override
-    public void process(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(Bullet.class)) {
+    public void process(GameData gameData, World world)
+    {
+        for (Entity bullet : world.getEntities(Bullet.class))
+        {
             double changeX = Math.cos(Math.toRadians(bullet.getRotation()));
             double changeY = Math.sin(Math.toRadians(bullet.getRotation()));
             bullet.setX(bullet.getX() + changeX * 3);
@@ -25,7 +25,8 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
     }
 
     @Override
-    public Entity createBullet(Entity shooter, GameData gameData) {
+    public Entity createBullet(Entity shooter, GameData gameData)
+    {
         Entity bullet = new Bullet();
         bullet.setPolygonCoordinates(1, -1, 1, 1, -1, 1, -1, -1);
         double changeX = Math.cos(Math.toRadians(shooter.getRotation()));

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
-public class AsteroidProcessor implements IEntityProcessingService {
+public class AsteroidProcessor implements IEntityProcessingService
+{
     private final IAsteroidSplitter asteroidSplitter;
 
     @Autowired
@@ -19,8 +20,10 @@ public class AsteroidProcessor implements IEntityProcessingService {
     }
 
     @Override
-    public void process(GameData gameData, World world) {
-        for (Entity asteroid : world.getEntities(Asteroid.class)) {
+    public void process(GameData gameData, World world)
+    {
+        for (Entity asteroid : world.getEntities(Asteroid.class))
+        {
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
 

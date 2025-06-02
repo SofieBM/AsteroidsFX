@@ -2,11 +2,6 @@ package dk.sdu.mmmi.cbse.common.services;
 
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-
-/**
- *
- * @author jcs
- */
 public interface IPostEntityProcessingService
 {
     //Interface-niveau: Beskriv generelt, hvad dette interface repræsenterer. (F.eks., "Interface for services, der udfører handlinger efter alle entiteter er blevet behandlet, typisk til kollisionsdetektion eller oprydning.")

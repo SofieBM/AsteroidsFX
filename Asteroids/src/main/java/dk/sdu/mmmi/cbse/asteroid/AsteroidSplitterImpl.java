@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class AsteroidSplitterImpl implements IAsteroidSplitter
 {
     @Override
-    public void createSplitAsteroid(Entity e, World world) {
+    public void createSplitAsteroid(Entity e, World world)
+    {
     }
 }

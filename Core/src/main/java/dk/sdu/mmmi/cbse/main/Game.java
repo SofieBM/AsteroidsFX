@@ -30,7 +30,8 @@ import java.util.Optional; // NEW: Import Optional for cleaner service access
  * Now integrates with a scoring microservice.
  */
 @Component
-class Game {
+class Game
+{
 
     private final GameData gameData = new GameData();
     private final World world = new World();
@@ -54,7 +55,8 @@ class Game {
      * @param scoreServices List of score services (expected to contain ScoreServiceClient).
      */
     Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList,
-         List<IPostEntityProcessingService> postEntityProcessingServices, List<IScoreService> scoreServices) { // NEW parameter
+         List<IPostEntityProcessingService> postEntityProcessingServices, List<IScoreService> scoreServices)
+    {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServiceList = entityProcessingServiceList;
         this.postEntityProcessingServices = postEntityProcessingServices;
@@ -66,14 +68,16 @@ class Game {
      * @param window The primary stage for this application.
      * @throws Exception If any error occurs during initialization.
      */
-    public void start(Stage window) throws Exception {
+    public void start(Stage window) throws Exception
+    {
         // Initialize the score display text
         scoreText = new Text(10, 20, "Score: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(scoreText);
         Scene scene = new Scene(gameWindow);
         // Set up keyboard input handlers
-        scene.setOnKeyPressed(event -> {
+        scene.setOnKeyPressed(event ->
+        {
             if (event.getCode().equals(KeyCode.LEFT)) {
                 gameData.getKeys().setKey(GameKeys.LEFT, true);
             }
@@ -87,7 +91,8 @@ class Game {
                 gameData.getKeys().setKey(GameKeys.SPACE, true);
             }
         });
-        scene.setOnKeyReleased(event -> {
+        scene.setOnKeyReleased(event ->
+        {
             if (event.getCode().equals(KeyCode.LEFT)) {
                 gameData.getKeys().setKey(GameKeys.LEFT, false);
             }
@@ -103,12 +108,14 @@ class Game {
         });
 
         // Start all registered game plugins
-        for (IGamePluginService iGamePlugin : getGamePluginServices()) {
+        for (IGamePluginService iGamePlugin : getGamePluginServices())
+        {
             iGamePlugin.start(gameData, world);
         }
 
         // Add initial entities to the game window
-        for (Entity entity : world.getEntities()) {
+        for (Entity entity : world.getEntities())
+        {
             Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
@@ -125,10 +132,13 @@ class Game {
     /**
      * Starts the animation timer for the game loop.
      */
-    public void render() {
-        new AnimationTimer() {
+    public void render()
+    {
+        new AnimationTimer()
+        {
             @Override
-            public void handle(long now) {
+            public void handle(long now)
+            {
                 update();
                 draw();
                 gameData.getKeys().update();
@@ -140,9 +150,12 @@ class Game {
     /**
      * Updates the game state by processing entities and handling post-processing (like collisions).
      */
-    private void update() {
+    private void update()
+    {
+
         // Process all entities (e.g., player movement, bullet movement, asteroid movement)
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices())
+        {
             entityProcessorService.process(gameData, world);
         }
 
@@ -150,16 +163,19 @@ class Game {
         List<Entity> entitiesBeforePostProcessing = List.copyOf(world.getEntities());
 
         // Perform post-processing (e.g., collision detection and resolution)
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices())
+        {
             postEntityProcessorService.process(gameData, world);
         }
 
         //Detect which entities were removed during post-processing and update score
         List<Entity> entitiesAfterPostProcessing = List.copyOf(world.getEntities());
-        for (Entity entity : entitiesBeforePostProcessing) {
+        for (Entity entity : entitiesBeforePostProcessing)
+        {
             if (!entitiesAfterPostProcessing.contains(entity)) {
                 // If an entity was present before but not after, it was removed
-                if (entity instanceof Asteroid) {
+                if (entity instanceof Asteroid)
+                {
                     // If the removed entity was an Asteroid, add score
                     getScoreService().ifPresent(service -> service.addScore(playerId, 100));
                 }

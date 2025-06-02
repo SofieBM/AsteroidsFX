@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class PlayerControlSystem implements IEntityProcessingService {
+public class PlayerControlSystem implements IEntityProcessingService
+{
 
     private final List<BulletSPI> bulletSPIs;
     /**
@@ -27,18 +28,23 @@ public class PlayerControlSystem implements IEntityProcessingService {
     }
 
     @Override
-    public void process(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
+    public void process(GameData gameData, World world)
+    {
+        for (Entity player : world.getEntities(Player.class))
+        {
             // Player rotation based on LEFT/RIGHT keys
-            if (gameData.getKeys().isDown(GameKeys.LEFT)) {
+            if (gameData.getKeys().isDown(GameKeys.LEFT))
+            {
                 player.setRotation(player.getRotation() - 5);
             }
-            if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
+            if (gameData.getKeys().isDown(GameKeys.RIGHT))
+            {
                 player.setRotation(player.getRotation() + 5);
             }
 
             // Player movement based on UP key
-            if (gameData.getKeys().isDown(GameKeys.UP)) {
+            if (gameData.getKeys().isDown(GameKeys.UP))
+            {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
                 double changeY = Math.sin(Math.toRadians(player.getRotation()));
                 player.setX(player.getX() + changeX);
@@ -46,8 +52,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
             }
 
             // Player shooting based on SPACE key
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                if (!bulletSPIs.isEmpty()) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE))
+            {
+                if (!bulletSPIs.isEmpty())
+                {
                     getBulletSPI().ifPresent(
                             spi -> {
                                 world.addEntity(spi.createBullet(player, gameData));
@@ -59,16 +67,20 @@ public class PlayerControlSystem implements IEntityProcessingService {
             }
 
             // Screen wrapping for the player
-            if (player.getX() < 0) {
+            if (player.getX() < 0)
+            {
                 player.setX(gameData.getDisplayWidth());
             }
-            if (player.getX() > gameData.getDisplayWidth()) {
+            if (player.getX() > gameData.getDisplayWidth())
+            {
                 player.setX(0);
             }
-            if (player.getY() < 0) {
+            if (player.getY() < 0)
+            {
                 player.setY(gameData.getDisplayHeight());
             }
-            if (player.getY() > gameData.getDisplayHeight()) {
+            if (player.getY() > gameData.getDisplayHeight())
+            {
                 player.setY(0);
             }
         }
